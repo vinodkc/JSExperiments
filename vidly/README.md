@@ -1,2 +1,4 @@
-export PORT=3002
-nodemon index.js
+`export PORT=3002`
+
+Run 
+`nodemon index.js`
