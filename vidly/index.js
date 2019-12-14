@@ -1,6 +1,7 @@
 const express = require('express');
 
 //Middle wares
+const config = require('config')
 const helmet = require('helmet');
 const logger = require("./Logger.js");
 const authenticate = require('./Authenticator')
@@ -11,6 +12,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(helmet());
+
+console.log('Application name ' + config.get('name') )
+console.log('Mail server  ' + config.get('mail.server'))
+console.log('Mail password ' + config.get('mail.password'));
 
 if (app.get('env') === 'development') {
     const morgan = require('morgan');
