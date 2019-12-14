@@ -1,8 +1,26 @@
-const express = require('express')
+const express = require('express');
+
+//Middle wares
+const helmet = require('helmet');
+const logger = require("./Logger.js");
+const authenticate = require('./Authenticator')
+
 const Joi = require('joi');
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(helmet());
+
+if (app.get('env') === 'development') {
+    const morgan = require('morgan');
+    app.use(morgan('tiny'));
+    console.log('Morgan enabled')
+}
+
+app.use(express.static('./public'));
+app.use(logger);
+app.use(authenticate);
 
 const genres = [
     { id: 1, name: 'Action' },  
